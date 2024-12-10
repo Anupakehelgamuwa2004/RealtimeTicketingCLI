@@ -1,78 +1,102 @@
-# Ticketing System
+Ticket Selling System User Guide
+Overview
+This is a multi-threaded ticket selling system that allows vendors to add tickets to a pool and customers to retrieve tickets concurrently. The system provides a configurable approach to managing ticket sales with concurrent processing.
+Prerequisites
 
-## Overview
-This Ticketing System allows vendors to add tickets to a pool, and customers can purchase tickets from this pool. The system uses multi-threading to simulate multiple vendors adding tickets and customers purchasing tickets concurrently. The configuration is stored in a JSON file and can be loaded on subsequent runs to avoid re-entering the details.
+Java Development Kit (JDK) 8 or higher
+Gson library (for JSON configuration)
 
-## Prerequisites
-Before running the system, ensure you have the following:
-- **Java JDK** (version 8 or higher) installed on your system.
-- **Google Gson library** for handling JSON operations (you can add it as a dependency in your project).
+System Components
+The system consists of four main classes:
 
-## Setup
-1. **Clone or Download the Project:**
-   - Clone this repository or download the source files to your local system.
+Main: The entry point of the application
+Configuration: Manages system configuration settings
+TicketPool: Handles ticket addition and retrieval
+Vendor: Adds tickets to the pool
+Customer: Retrieves tickets from the pool
 
-2. **Compile the Java Files:**
-   - If you're using the command line, navigate to the directory where the files are located and compile the Java files using:
-     ```
-     javac *.java
-     ```
+Configuration Options
+When you start the application, you'll be prompted to configure the following parameters:
 
-3. **Run the Application:**
-   - After compiling the files, run the `Main` class:
-     ```
-     java lk.iit.Main
-     ```
+Max Ticket Capacity: The maximum number of tickets that can be in the system
+Total Tickets: The total number of tickets to be managed
+Ticket Release Rate: Time (in milliseconds) between ticket additions by vendors
+Customer Retrieval Rate: Time (in milliseconds) between ticket retrievals by customers
 
-## Configuration File
-The system uses a configuration file `configuration.json` to store and load the settings for the ticket pool. When the system is first run, it will prompt you to input the following configuration values:
-- **Max Ticket Capacity:** The maximum number of tickets that can be in the pool at any given time.
-- **Total Tickets:** The total number of tickets that will be managed by the system. This cannot exceed the max ticket capacity.
-- **Ticket Release Rate (ms):** The rate (in milliseconds) at which tickets are added to the pool by vendors.
-- **Customer Retrieval Rate (ms):** The rate (in milliseconds) at which customers attempt to purchase tickets.
+Important Configuration Rules
 
-If a configuration file already exists, you will be asked if you want to load the previous configuration. If you choose not to, you will be prompted to enter new values.
+Total Tickets cannot exceed Max Ticket Capacity
+All inputs must be positive integers
+Configuration can be saved and loaded between sessions
 
-## System Operations
-Once the configuration is loaded or set, the system will ask you to choose an option:
-1. **Start the ticket selling process.**
-2. **Stop the process and exit.**
+Running the Application
+Starting the Application
 
-### Ticket Selling Process:
-- The system will simulate two vendors adding tickets to the pool and two customers attempting to retrieve tickets concurrently.
-- You can stop the process at any time by pressing `2` and the system will gracefully terminate all running threads.
+Compile the Java files
+Run the Main class
 
-## Key Features
-- **Multi-threaded Simulation:** The system uses Java's multi-threading capabilities to simulate the actions of multiple vendors and customers simultaneously.
-- **Thread Safety:** The `TicketPool` class ensures thread safety when adding and retrieving tickets.
-- **Configuration Persistence:** Configuration settings are saved in a `configuration.json` file and can be reloaded for future runs.
+Initial Configuration
+When first run, you'll see two scenarios:
 
-## Stopping the Process
-- While the system is running, you can press `2` at any time to stop the ticket selling process and exit the program.
-- The program will log information about the stopping process and ensure all threads are properly terminated.
+No Previous Configuration: You'll be prompted to enter all configuration parameters
+Existing Configuration: You can choose to load previous settings or create new ones
 
-## Example Usage:
-- When prompted, input valid configuration values for:
-  - Max Ticket Capacity
-  - Total Tickets
-  - Ticket Release Rate (milliseconds)
-  - Customer Retrieval Rate (milliseconds)
+System Operation
+After configuration, you have two options:
 
-- The system will then prompt you to either start the ticket selling process or stop it.
-- Press `1` to start, and you will see logs in the terminal as vendors add tickets and customers retrieve them.
-- Press `2` to stop the process.
+Start Ticket Selling Process:
 
-## Logging
-The system uses `java.util.logging` to log key events. Logs are displayed in the console and include information such as:
-- Vendor actions (adding tickets).
-- Customer actions (purchasing tickets).
-- Errors or interruptions in the process.
+Two vendors will add tickets
+Two customers will purchase tickets
+System runs concurrently
 
-## Troubleshooting
-- **Invalid Input:** If you enter an invalid input during configuration, the system will prompt you to enter a valid value.
-- **File Not Found:** If the configuration file is missing, the system will prompt you to provide the necessary input.
-- **Thread Interruptions:** If the system is interrupted (e.g., by stopping the process), appropriate messages will be logged.
 
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Stop Process: Exit the application
 
+During Ticket Selling
+
+Press 2 at any time to stop the ticket selling process
+The system will log activities to the console and a log file
+
+Configuration File
+
+A configuration.json file is created to save your settings
+You can modify this file manually or through the application
+
+Logging
+
+System uses Java's built-in logging
+Logs include timestamps, log levels, and descriptive messages
+Helpful for tracking system activities and debugging
+
+Concurrency Model
+
+Uses Java threads to simulate concurrent ticket selling
+Synchronized methods ensure thread-safe ticket pool operations
+Vendors can add tickets
+Customers can retrieve tickets
+System stops when all tickets are sold or manually interrupted
+
+Troubleshooting
+
+Ensure positive integer inputs
+Check console for any error messages
+Verify Gson library is in your classpath
+
+Example Workflow
+
+Start application
+Configure system (e.g., 100 max capacity, 80 total tickets)
+Choose to start ticket selling
+Watch vendors add tickets
+Observe customers purchasing tickets
+Stop process when desired
+
+Limitations
+
+Fixed to two vendors and two customers
+No persistence of ticket sales across application restarts
+
+Dependencies
+
+Requires Gson library for JSON configuration management

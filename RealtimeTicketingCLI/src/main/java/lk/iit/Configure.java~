@@ -1,0 +1,37 @@
+package lk.iit;
+
+import java.util.Scanner;
+
+public class Configure {
+    private int maxTicketCapacity;
+    private int systemCapacity;
+    private int ticketReleaseRate;
+    private int customerRetrievalRate;
+
+    public void promptUserInput() {
+        Scanner scanner = new Scanner(System.in);
+
+        maxTicketCapacity = validateInput("Max Ticket Capacity", scanner);
+        systemCapacity = validateInput("System Capacity", scanner);
+        ticketReleaseRate = validateInput("Ticket Release Rate (ms)", scanner);
+        customerRetrievalRate = validateInput("Customer Retrieval Rate (ms)", scanner);
+    }
+
+    private int validateInput(String prompt, Scanner scanner) {
+        int value;
+        do {
+            System.out.print(prompt + ": ");
+            while (!scanner.hasNextInt()) {
+                System.out.print("Invalid input. " + prompt + ": ");
+                scanner.next();
+            }
+            value = scanner.nextInt();
+        } while (value <= 0);
+        return value;
+    }
+
+    public int getMaxTicketCapacity() { return maxTicketCapacity; }
+    public int getSystemCapacity() { return systemCapacity; }
+    public int getTicketReleaseRate() { return ticketReleaseRate; }
+    public int getCustomerRetrievalRate() { return customerRetrievalRate; }
+}
